@@ -1092,6 +1092,7 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
           <span id="topbarCompanyName"></span>
         </div>
         <button class="btn btn-ghost" id="btnPDF" style="display:none" onclick="exportPDF()">📥 Export PDF</button>
+        <button class="btn btn-ghost" id="btnCSV" style="display:none" onclick="exportCSV()">CSV</button>
         <button class="btn btn-danger" id="btnReset" style="display:none" onclick="doReset()">🗑 Reset</button>
         <div class="theme-btn" id="themePickerBtn" onclick="toggleThemePicker()" title="Change theme">🎨</div>
         <button class="btn btn-ghost" style="padding:8px 10px" onclick="toggleMobSB()">☰</button>
@@ -1297,6 +1298,7 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
               <button class="active" onclick="setFilter('avail',this)">Ready Charts</button>
             </div>
             <button class="btn btn-ghost" style="font-size:12px" onclick="exportPDF()">📥 Export PDF</button>
+            <button class="btn btn-ghost" style="font-size:12px" onclick="exportCSV()">CSV</button>
           </div>
         </div>
         <div class="charts-grid" id="mainGrid"></div>
@@ -1754,6 +1756,7 @@ function activateDashboardView(){
   goSection('all');
   document.getElementById('btnReset').style.display='';
   document.getElementById('btnPDF').style.display='';
+  document.getElementById('btnCSV').style.display='';
   document.getElementById('fab').classList.add('show');
   S.generated=true;
   updateMapProgress();
@@ -2432,6 +2435,65 @@ function dlPNG(canvasId){
   toast('Chart downloaded!','success');
 }
 
+function csvCell(v){
+  const s=String(v==null?'':v);
+  return /[",\r\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;
+}
+
+function chartSummaryRows(chartObj,source){
+  const rows=[];
+  if(!chartObj||!chartObj.ok)return rows;
+  const def=chartObj.def, vals=chartObj.vals||[];
+  let labels=[],values=[];
+  if(def.numeric){
+    const r=bucketize(vals.map(function(v){return parseFloat(v);}).filter(function(v){return !isNaN(v);}));
+    labels=r.b;values=r.c;
+  }else{
+    const f=freq(vals);
+    labels=Object.keys(f);values=Object.values(f);
+  }
+  labels.forEach(function(label,i){
+    rows.push([source,def.id,def.title,def.type,label,values[i],vals.length]);
+  });
+  return rows;
+}
+
+function exportCSV(){
+  const ready=Object.values(S.chartData).filter(function(cd){return cd.ok;});
+  if(!ready.length&&!S.customCharts.length){
+    toast('No dashboard data to export. Generate charts first.','error');
+    return;
+  }
+  const rows=[
+    ['Report','DataLens Smart Analytics'],
+    ['Company',S.company&&S.company.name?S.company.name:''],
+    ['Dataset',S.fileName||''],
+    ['Records',S.data.length],
+    ['Generated',new Date().toLocaleString()],
+    [],
+    ['Source','Chart ID','Chart Title','Chart Type','Label / Bucket','Value Count','Data Points']
+  ];
+  ready.forEach(function(cd){
+    chartSummaryRows(cd,'Dashboard').forEach(function(r){rows.push(r);});
+  });
+  S.customCharts.forEach(function(c){
+    const fake={ok:true,def:{id:c.id,title:c.title,type:c.type,numeric:false},vals:c.vals||[]};
+    chartSummaryRows(fake,'Custom').forEach(function(r){rows.push(r);});
+  });
+  const csv=rows.map(function(r){return r.map(csvCell).join(',');}).join('\r\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  const prefix=S.company&&S.company.name?S.company.name.replace(/[^a-z0-9]/gi,'_')+'_':'';
+  a.href=url;
+  a.download=prefix+'DataLens_Dashboard.csv';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  toast('CSV exported','success');
+}
+
 async function exportPDF(){
   // Ask user about cover page
   const hasCo=S.company&&S.company.name;
@@ -2597,6 +2659,7 @@ function doReset(){
   const txt=document.getElementById('mapProgressText');if(txt)txt.textContent='0 / '+FIELDS.filter(f=>f.req).length+' required';
   const hint=document.getElementById('mapMissingHint');if(hint)hint.innerHTML='';
   document.getElementById('btnPDF').style.display='none';
+  document.getElementById('btnCSV').style.display='none';
   document.getElementById('fab').classList.remove('show');
   goSection('upload');
   toast('Data reset','info');
