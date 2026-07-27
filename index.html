@@ -8,6 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
 /* ===== THEME ===== */
 :root{
@@ -19,6 +20,7 @@
 }
 /* ── Light ── */
 [data-theme="light"]{
+  
   --bg:#f0f2fa;--bg2:#ffffff;--bg3:#f7f8fd;--bg4:#eceffe;
   --border:#d8ddf0;--border2:#c5cce6;
   --text:#1a1d2e;--text2:#4a5080;--text3:#8890b0;
@@ -191,6 +193,8 @@ body.cursor-click #cur-ring{width:24px;height:24px;opacity:1;}
 .nav-item:hover{background:var(--bg3);color:var(--text);}
 .nav-item.active{background:var(--glow);color:var(--accent);border-color:rgba(79,142,247,.2);}
 .nav-icon{min-width:18px;width:18px;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.ui-icon,.nav-icon svg,.logo-icon svg,.icon-btn svg,.btn svg,.theme-btn svg,.chart-choice-icon svg,.empty-state-icon svg,.co-type-pill-icon svg,.sb-co-empty-icon svg,.sb-co-emoji svg,#topbarCompanyEmoji svg,#dashCoEmoji svg,.ai-insight-icon svg,.clean-issue-icon svg,.ct-icon svg,.sug-icon svg{width:1em;height:1em;stroke-width:2;vertical-align:-0.15em;}
+.logo-icon,.nav-icon,.drop-zone-icon,.empty-state-icon,.ct-icon,.sug-icon,.co-logo-icon,.co-type-pill-icon,.sb-co-empty-icon,.sb-co-emoji,#topbarCompanyEmoji,#dashCoEmoji{color:var(--accent);}
 .nav-badge{margin-left:auto;background:var(--accent);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;font-family:'DM Mono',monospace;}
 .sidebar.collapsed .nav-label,.sidebar.collapsed .nav-badge,.sidebar.collapsed .nav-label-sec{display:none;}
 .sidebar-footer{padding:12px 8px;border-top:1px solid var(--border);}
@@ -458,7 +462,7 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
   font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
   display:flex;align-items:center;gap:8px;
 }
-.co-card-title::before{content:'🏢';}
+.co-card-title::before{content:'';display:none;}
 .co-card-badge{
   background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.2);
   color:var(--accent);border-radius:20px;
@@ -954,7 +958,7 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
 
 <!-- FAB -->
 <div id="fab">
-  <div class="fab-tip" id="fabTip" style="display:none">✨ Add Chart</div>
+  <div class="fab-tip" id="fabTip" style="display:none"><i data-lucide="plus"></i> Add Chart</div>
   <button class="fab-btn" id="fabBtn" onmouseenter="document.getElementById('fabTip').style.display='block'" onmouseleave="document.getElementById('fabTip').style.display='none'" onclick="openWizard()">
     <div class="fab-pulse"></div>
     +
@@ -965,7 +969,7 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
 <div id="wzOverlay" onclick="overlayClick(event)">
   <div class="wz-modal">
     <div class="wz-hdr">
-      <div><h2>✨ Create a Chart</h2><p>Build a custom visualization in 3 easy steps</p></div>
+      <div><h2><i data-lucide="chart-no-axes-combined"></i> Create a Chart</h2><p>Build a custom visualization in 3 easy steps</p></div>
       <div class="wz-close" onclick="closeWizard()">✕</div>
     </div>
     <div class="wz-steps">
@@ -990,20 +994,20 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
       <!-- Step 2 -->
       <div class="wz-step" id="ws2">
         <div class="sug-box" id="wzSugBox">
-          <div class="sug-icon">💡</div>
+          <div class="sug-icon"><i data-lucide="lightbulb"></i></div>
           <div class="sug-text" id="wzSugText"></div>
         </div>
         <div class="wz-field">
           <label>Choose Chart Type</label>
           <div class="ct-cards">
-            <div class="ct-card" data-type="bar" onclick="pickType(this)"><div class="ct-icon">📊</div><div class="ct-name">Bar</div></div>
-            <div class="ct-card" data-type="pie" onclick="pickType(this)"><div class="ct-icon">🥧</div><div class="ct-name">Pie</div></div>
-            <div class="ct-card" data-type="doughnut" onclick="pickType(this)"><div class="ct-icon">🍩</div><div class="ct-name">Doughnut</div></div>
-            <div class="ct-card" data-type="line" onclick="pickType(this)"><div class="ct-icon">📈</div><div class="ct-name">Line</div></div>
-            <div class="ct-card" data-type="histogram" onclick="pickType(this)"><div class="ct-icon">🔢</div><div class="ct-name">Histogram</div></div>
-            <div class="ct-card" data-type="radar" onclick="pickType(this)"><div class="ct-icon">🕸️</div><div class="ct-name">Radar</div></div>
-            <div class="ct-card" data-type="polarArea" onclick="pickType(this)"><div class="ct-icon">🎯</div><div class="ct-name">Polar</div></div>
-            <div class="ct-card" data-type="scatter" onclick="pickType(this)"><div class="ct-icon">🔵</div><div class="ct-name">Scatter</div></div>
+            <div class="ct-card" data-type="bar" onclick="pickType(this)"><div class="ct-icon"><i data-lucide="chart-column"></i></div><div class="ct-name">Bar</div></div>
+            <div class="ct-card" data-type="pie" onclick="pickType(this)"><div class="ct-icon"><i data-lucide="chart-pie"></i></div><div class="ct-name">Pie</div></div>
+            <div class="ct-card" data-type="doughnut" onclick="pickType(this)"><div class="ct-icon"><i data-lucide="circle"></i></div><div class="ct-name">Doughnut</div></div>
+            <div class="ct-card" data-type="line" onclick="pickType(this)"><div class="ct-icon"><i data-lucide="chart-line"></i></div><div class="ct-name">Line</div></div>
+            <div class="ct-card" data-type="histogram" onclick="pickType(this)"><div class="ct-icon"><i data-lucide="chart-no-axes-column"></i></div><div class="ct-name">Histogram</div></div>
+            <div class="ct-card" data-type="radar" onclick="pickType(this)"><div class="ct-icon"><i data-lucide="radar"></i></div><div class="ct-name">Radar</div></div>
+            <div class="ct-card" data-type="polarArea" onclick="pickType(this)"><div class="ct-icon"><i data-lucide="circle-dot"></i></div><div class="ct-name">Polar</div></div>
+            <div class="ct-card" data-type="scatter" onclick="pickType(this)"><div class="ct-icon"><i data-lucide="scatter-chart"></i></div><div class="ct-name">Scatter</div></div>
           </div>
         </div>
       </div>
@@ -1030,7 +1034,7 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-icon">🔍</div>
+      <div class="logo-icon"><i data-lucide="scan-search"></i></div>
       <div class="logo-wordmark">
         <div class="logo-line1">DataLens</div>
         <div class="logo-line2">Smart Analytics</div>
@@ -1038,37 +1042,37 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
     </div>
     <nav class="sidebar-nav">
       <div class="nav-label-sec">Data</div>
-      <div class="nav-item active" data-sec="upload" onclick="goSection('upload')"><span class="nav-icon">📁</span><span class="nav-label">Upload Data</span></div>
+      <div class="nav-item active" data-sec="upload" onclick="goSection('upload')"><span class="nav-icon"><i data-lucide="folder-open"></i></span><span class="nav-label">Upload Data</span></div>
       <div class="nav-label-sec" id="nlCharts" style="display:none">Charts</div>
-      <div class="nav-item" data-sec="all" id="nlAll" style="display:none" onclick="goSection('all')"><span class="nav-icon">⚡</span><span class="nav-label">All Charts</span><span class="nav-badge" id="nbAll">0</span></div>
-      <div class="nav-item" data-sec="all" id="aiNavItem" style="display:none" onclick="goSection('all');setTimeout(()=>document.getElementById('aiInsightsPanel').scrollIntoView({behavior:'smooth'}),200)"><span class="nav-icon">🤖</span><span class="nav-label">AI Insights</span><span class="nav-badge" style="background:linear-gradient(135deg,var(--accent),var(--accent2))" id="nbAI">0</span></div>
+      <div class="nav-item" data-sec="all" id="nlAll" style="display:none" onclick="goSection('all')"><span class="nav-icon"><i data-lucide="zap"></i></span><span class="nav-label">All Charts</span><span class="nav-badge" id="nbAll">0</span></div>
+      <div class="nav-item" data-sec="all" id="aiNavItem" style="display:none" onclick="goSection('all');setTimeout(()=>document.getElementById('aiInsightsPanel').scrollIntoView({behavior:'smooth'}),200)"><span class="nav-icon"><i data-lucide="bot"></i></span><span class="nav-label">AI Insights</span><span class="nav-badge" style="background:linear-gradient(135deg,var(--accent),var(--accent2))" id="nbAI">0</span></div>
       <div id="chartNavItems"></div>
       <div class="nav-label-sec" id="nlCustom" style="display:none">Custom</div>
-      <div class="nav-item" id="nlMy" style="display:none" onclick="goSection('mychart')"><span class="nav-icon">🎨</span><span class="nav-label">My Charts</span><span class="nav-badge" id="nbMy">0</span></div>
+      <div class="nav-item" id="nlMy" style="display:none" onclick="goSection('mychart')"><span class="nav-icon"><i data-lucide="palette"></i></span><span class="nav-label">My Charts</span><span class="nav-badge" id="nbMy">0</span></div>
       <div class="nav-label-sec" id="nlTools" style="display:none">Tools</div>
-      <div class="nav-item" id="nlAdv" style="display:none" onclick="goSection('advchart')"><span class="nav-icon">📊</span><span class="nav-label">Advanced Charts</span></div>
+      <div class="nav-item" id="nlAdv" style="display:none" onclick="goSection('advchart')"><span class="nav-icon"><i data-lucide="chart-column"></i></span><span class="nav-label">Advanced Charts</span></div>
       <span id="nbClean" style="display:none">0</span>
     </nav>
     <!-- SIDEBAR COMPANY SECTION -->
     <div id="sbCompanySection">
       <div id="sbCoContent">
         <div class="sb-co-empty" id="sbCoEmpty">
-          <div class="sb-co-empty-icon">🏢</div>
+          <div class="sb-co-empty-icon"><i data-lucide="building-2"></i></div>
           <span>No company set</span>
           <button class="sb-co-empty-link" onclick="goSection('upload')">+ Add yours</button>
         </div>
         <div class="sb-co-card" id="sbCoCard" style="display:none">
           <div class="sb-co-top">
             <img class="sb-co-logo" id="sbCoLogo" src="" alt="">
-            <span class="sb-co-emoji" id="sbCoEmoji">🏢</span>
+            <span class="sb-co-emoji" id="sbCoEmoji"><i data-lucide="building-2"></i></span>
             <div class="sb-co-info">
               <div class="sb-co-name" id="sbCoName"></div>
               <div class="sb-co-type" id="sbCoType"></div>
             </div>
           </div>
           <div class="sb-co-actions">
-            <button class="sb-co-btn" onclick="goEditCompany()">✏ Edit</button>
-            <button class="sb-co-btn remove" onclick="clearCompany()">✕ Remove</button>
+            <button class="sb-co-btn" onclick="goEditCompany()"><i data-lucide="pencil"></i> Edit</button>
+            <button class="sb-co-btn remove" onclick="clearCompany()"><i data-lucide="x"></i> Remove</button>
           </div>
         </div>
       </div>
@@ -1088,14 +1092,14 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
       <div class="topbar-actions">
         <div id="topbarCompany">
           <img id="topbarCompanyLogo" src="" alt="">
-          <span id="topbarCompanyEmoji">🏢</span>
+          <span id="topbarCompanyEmoji"><i data-lucide="building-2"></i></span>
           <span id="topbarCompanyName"></span>
         </div>
-        <button class="btn btn-ghost" id="btnPDF" style="display:none" onclick="exportPDF()">📥 Export PDF</button>
+        <button class="btn btn-ghost" id="btnPDF" style="display:none" onclick="exportPDF()"><i data-lucide="file-down"></i> Export PDF</button>
         <button class="btn btn-ghost" id="btnCSV" style="display:none" onclick="exportCSV()">CSV</button>
-        <button class="btn btn-danger" id="btnReset" style="display:none" onclick="doReset()">🗑 Reset</button>
-        <div class="theme-btn" id="themePickerBtn" onclick="toggleThemePicker()" title="Change theme">🎨</div>
-        <button class="btn btn-ghost" style="padding:8px 10px" onclick="toggleMobSB()">☰</button>
+        <button class="btn btn-danger" id="btnReset" style="display:none" onclick="doReset()"><i data-lucide="trash-2"></i> Reset</button>
+        <div class="theme-btn" id="themePickerBtn" onclick="toggleThemePicker()" title="Change theme"><i data-lucide="palette"></i></div>
+        <button class="btn btn-ghost" style="padding:8px 10px" onclick="toggleMobSB()"><i data-lucide="menu"></i></button>
       </div>
     </header>
 
@@ -1119,31 +1123,31 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
               <div class="co-logo-zone" id="coLogoZone">
                 <input type="file" id="coLogoInput" accept="image/*" onchange="onLogoUpload(event)">
                 <img id="coLogoPreviewImg" class="co-logo-preview-img" src="" alt="">
-                <div class="co-logo-icon" id="coLogoIconEl">🖼</div>
+                <div class="co-logo-icon" id="coLogoIconEl"><i data-lucide="image"></i></div>
                 <div class="co-logo-hint" id="coLogoHintEl">Click or drag image</div>
               </div>
             </div>
           </div>
           <div class="co-type-section">
-            <div class="co-type-label">🏷 Company Type</div>
+            <div class="co-type-label"><i data-lucide="tag"></i> Company Type</div>
             <div class="co-type-grid" id="coTypeGrid">
-          <div class="co-type-pill" data-type="Manufacturing" onclick="selectCoType(this)"><div class="co-type-pill-icon">🏭</div><div class="co-type-pill-name">Manufacturing</div></div>
-          <div class="co-type-pill" data-type="Technology" onclick="selectCoType(this)"><div class="co-type-pill-icon">💻</div><div class="co-type-pill-name">Technology</div></div>
-          <div class="co-type-pill" data-type="Healthcare" onclick="selectCoType(this)"><div class="co-type-pill-icon">🏥</div><div class="co-type-pill-name">Healthcare</div></div>
-          <div class="co-type-pill" data-type="Education" onclick="selectCoType(this)"><div class="co-type-pill-icon">🎓</div><div class="co-type-pill-name">Education</div></div>
-          <div class="co-type-pill" data-type="Finance" onclick="selectCoType(this)"><div class="co-type-pill-icon">🏦</div><div class="co-type-pill-name">Finance</div></div>
-          <div class="co-type-pill" data-type="Retail" onclick="selectCoType(this)"><div class="co-type-pill-icon">🛒</div><div class="co-type-pill-name">Retail</div></div>
-          <div class="co-type-pill" data-type="Logistics" onclick="selectCoType(this)"><div class="co-type-pill-icon">🚚</div><div class="co-type-pill-name">Logistics</div></div>
-          <div class="co-type-pill" data-type="Legal" onclick="selectCoType(this)"><div class="co-type-pill-icon">⚖️</div><div class="co-type-pill-name">Legal</div></div>
-          <div class="co-type-pill" data-type="Construction" onclick="selectCoType(this)"><div class="co-type-pill-icon">🏗</div><div class="co-type-pill-name">Construction</div></div>
-          <div class="co-type-pill" data-type="Creative" onclick="selectCoType(this)"><div class="co-type-pill-icon">🎨</div><div class="co-type-pill-name">Creative</div></div>
-          <div class="co-type-pill" data-type="NGO / Non-profit" onclick="selectCoType(this)"><div class="co-type-pill-icon">🌿</div><div class="co-type-pill-name">NGO / Non-profit</div></div>
-          <div class="co-type-pill" data-type="Government" onclick="selectCoType(this)"><div class="co-type-pill-icon">🏛</div><div class="co-type-pill-name">Government</div></div>
+          <div class="co-type-pill" data-type="Manufacturing" onclick="selectCoType(this)"><div class="co-type-pill-icon"><i data-lucide="factory"></i></div><div class="co-type-pill-name">Manufacturing</div></div>
+          <div class="co-type-pill" data-type="Technology" onclick="selectCoType(this)"><div class="co-type-pill-icon"><i data-lucide="monitor"></i></div><div class="co-type-pill-name">Technology</div></div>
+          <div class="co-type-pill" data-type="Healthcare" onclick="selectCoType(this)"><div class="co-type-pill-icon"><i data-lucide="hospital"></i></div><div class="co-type-pill-name">Healthcare</div></div>
+          <div class="co-type-pill" data-type="Education" onclick="selectCoType(this)"><div class="co-type-pill-icon"><i data-lucide="graduation-cap"></i></div><div class="co-type-pill-name">Education</div></div>
+          <div class="co-type-pill" data-type="Finance" onclick="selectCoType(this)"><div class="co-type-pill-icon"><i data-lucide="landmark"></i></div><div class="co-type-pill-name">Finance</div></div>
+          <div class="co-type-pill" data-type="Retail" onclick="selectCoType(this)"><div class="co-type-pill-icon"><i data-lucide="shopping-cart"></i></div><div class="co-type-pill-name">Retail</div></div>
+          <div class="co-type-pill" data-type="Logistics" onclick="selectCoType(this)"><div class="co-type-pill-icon"><i data-lucide="truck"></i></div><div class="co-type-pill-name">Logistics</div></div>
+          <div class="co-type-pill" data-type="Legal" onclick="selectCoType(this)"><div class="co-type-pill-icon"><i data-lucide="scale"></i></div><div class="co-type-pill-name">Legal</div></div>
+          <div class="co-type-pill" data-type="Construction" onclick="selectCoType(this)"><div class="co-type-pill-icon"><i data-lucide="hard-hat"></i></div><div class="co-type-pill-name">Construction</div></div>
+          <div class="co-type-pill" data-type="Creative" onclick="selectCoType(this)"><div class="co-type-pill-icon"><i data-lucide="palette"></i></div><div class="co-type-pill-name">Creative</div></div>
+          <div class="co-type-pill" data-type="NGO / Non-profit" onclick="selectCoType(this)"><div class="co-type-pill-icon"><i data-lucide="leaf"></i></div><div class="co-type-pill-name">NGO / Non-profit</div></div>
+          <div class="co-type-pill" data-type="Government" onclick="selectCoType(this)"><div class="co-type-pill-icon"><i data-lucide="landmark"></i></div><div class="co-type-pill-name">Government</div></div>
             </div>
           </div>
           <div class="co-card-actions">
-            <button class="btn btn-ghost" id="coClearBtn" onclick="clearCompany()" style="display:none;font-size:12px">✕ Clear</button>
-            <button class="btn btn-primary" onclick="saveCompany()" style="font-size:12px">💾 Save Company Info</button>
+            <button class="btn btn-ghost" id="coClearBtn" onclick="clearCompany()" style="display:none;font-size:12px"><i data-lucide="x"></i> Clear</button>
+            <button class="btn btn-primary" onclick="saveCompany()" style="font-size:12px"><i data-lucide="save"></i> Save Company Info</button>
           </div>
           <div class="saved-companies" id="savedCompanies">
             <div class="saved-company-head">
@@ -1159,7 +1163,7 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
           <p>Upload your dataset and generate intelligent visualizations automatically</p>
           <div class="drop-zone" id="dropZone">
             <input type="file" id="fileIn" accept=".xlsx,.xls,.csv" onchange="onFile(event)">
-            <div class="drop-zone-icon">📂</div>
+            <div class="drop-zone-icon"><i data-lucide="folder-up"></i></div>
             <div class="drop-zone-title">Drop your file here or click to browse</div>
             <div class="drop-zone-sub">Supports Excel and CSV files</div>
             <div class="drop-zone-formats">
@@ -1174,7 +1178,7 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
           <!-- preview -->
           <div class="preview-card">
             <div class="preview-hdr">
-              <div class="preview-hdr-title">📋 Data Preview <span class="meta-chip" id="rowChip">0 rows</span></div>
+              <div class="preview-hdr-title"><i data-lucide="table"></i> Data Preview <span class="meta-chip" id="rowChip">0 rows</span></div>
               <div style="display:flex;gap:8px" id="metaChips"></div>
             </div>
             <div class="tbl-wrap"><table class="data-tbl" id="previewTbl"></table></div>
@@ -1206,7 +1210,7 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
               <div class="chart-picker-grid" id="chartPickerGrid"></div>
             </div>
             <div class="map-actions">
-              <button class="btn btn-primary" onclick="autoMap()">🤖 Auto Map</button>
+              <button class="btn btn-primary" onclick="autoMap()"><i data-lucide="wand-sparkles"></i> Auto Map</button>
               <button class="btn btn-ghost" onclick="clearMap()">Clear</button>
               <button class="btn btn-success" id="genBtn" onclick="generateDashboard()" disabled>Generate Dashboard →</button>
             </div>
@@ -1214,7 +1218,7 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
           <!-- quick add banner -->
           <div class="quick-add-banner">
             <div>
-              <h3>✨ Want a custom chart?</h3>
+              <h3><i data-lucide="sparkles"></i> Want a custom chart?</h3>
               <p>After generating the dashboard, hit the <strong>+</strong> button at the bottom-right corner to build your own chart.</p>
             </div>
             <button class="btn btn-primary" onclick="if(S.generated)openWizard();else generateDashboard();">+ Add Chart Now</button>
@@ -1222,7 +1226,7 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
         </div>
 
         <div class="empty-state" id="uploadEmpty">
-          <div class="empty-state-icon">📊</div>
+          <div class="empty-state-icon"><i data-lucide="chart-column"></i></div>
           <div class="empty-state-title">No data yet</div>
           <div class="empty-state-text">Upload an Excel or CSV file to generate your analytics dashboard with smart charts.</div>
         </div>
@@ -1233,29 +1237,28 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
         <!-- COMPANY BANNER -->
         <div id="dashCompanyBanner">
           <img id="dashCoLogo" src="" alt="">
-          <span id="dashCoEmoji">🏢</span>
+          <span id="dashCoEmoji"><i data-lucide="building-2"></i></span>
           <div class="dash-co-info">
             <div class="dash-co-name" id="dashCoName"></div>
             <div class="dash-co-sub" id="dashCoSub">Analytics Dashboard · DataLens Smart Analytics</div>
           </div>
-          <button class="dash-co-edit" onclick="goEditCompany()">✏ Edit Company</button>
+          <button class="dash-co-edit" onclick="goEditCompany()"><i data-lucide="pencil"></i> Edit Company</button>
         </div>
         <div class="stats-bar" id="statsBar"></div>
         <div id="noMappingNote" style="display:none;background:rgba(247,184,79,.08);border:1px solid rgba(247,184,79,.2);border-radius:10px;padding:10px 16px;margin-bottom:14px;font-size:12px;color:var(--accent5);align-items:center;gap:8px">
-          <span>⚠️</span>
-          <span>Columns not mapped — charts are using auto-detected columns. <button onclick="goSection('upload')" style="background:none;border:none;color:var(--accent);font-size:12px;cursor:none;text-decoration:underline;font-family:inherit">Map columns</button> then Re-generate for accurate charts.</span>
+          <span><i data-lucide="triangle-alert"></i></span><span>Columns not mapped — charts are using auto-detected columns. <button onclick="goSection('upload')" style="background:none;border:none;color:var(--accent);font-size:12px;cursor:none;text-decoration:underline;font-family:inherit">Map columns</button> then Re-generate for accurate charts.</span>
         </div>
 
         <!-- DASHBOARD VERSION BAR -->
         <div id="dashVersionBar">
-          <span class="dv-label">📊 Dashboards:</span>
+          <span class="dv-label"><i data-lucide="layout-dashboard"></i> Dashboards:</span>
           <div class="dv-tabs" id="dvTabs"></div>
           <button class="dv-new-btn" onclick="showChangeRowPanel()">＋ New Dashboard</button>
         </div>
 
         <!-- CHANGE ROW MAPPING PANEL -->
         <div id="changeRowPanel">
-          <div class="crp-title">⚙️ Configure New Dashboard
+          <div class="crp-title"><i data-lucide="settings"></i> Configure New Dashboard
             <button onclick="hideChangeRowPanel()" style="margin-left:auto;background:none;border:none;color:var(--text3);font-size:18px;cursor:none!important;line-height:1;">✕</button>
           </div>
           <div style="font-size:12px;color:var(--text2);margin-bottom:14px;">Choose different columns for each field to create a new dashboard version. You can compare it with the previous one.</div>
@@ -1265,8 +1268,8 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
           </div>
           <div class="crp-grid" id="crpGrid"></div>
           <div class="crp-actions">
-            <button class="btn btn-primary" onclick="generateNewDashboard()">📊 Generate Dashboard</button>
-            <button class="btn btn-ghost" onclick="crpAutoMap()">🤖 Auto Map</button>
+            <button class="btn btn-primary" onclick="generateNewDashboard()"><i data-lucide="chart-column"></i> Generate Dashboard</button>
+            <button class="btn btn-ghost" onclick="crpAutoMap()"><i data-lucide="wand-sparkles"></i> Auto Map</button>
             <button class="btn btn-ghost" onclick="hideChangeRowPanel()">Cancel</button>
           </div>
         </div>
@@ -1275,12 +1278,11 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
         <div id="aiInsightsPanel" style="display:none">
           <div class="ai-panel-header">
             <div class="ai-panel-title">
-              <span>🤖</span>
-              <span>AI Insights</span>
+              <span><i data-lucide="bot"></i></span><span>AI Insights</span>
               <div class="ai-badge"><div class="ai-badge-dot"></div>Powered by DataLens AI</div>
             </div>
             <button class="ai-refresh-btn" id="aiRefreshBtn" onclick="runAIInsights()">
-              <span class="ai-refresh-icon">↻</span> Refresh
+              <span class="ai-refresh-icon"><i data-lucide="refresh-cw"></i></span> Refresh
             </button>
           </div>
           <div id="aiInsightsBody">
@@ -1297,7 +1299,7 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
             <div class="filter-row" id="filterRow">
               <button class="active" onclick="setFilter('avail',this)">Ready Charts</button>
             </div>
-            <button class="btn btn-ghost" style="font-size:12px" onclick="exportPDF()">📥 Export PDF</button>
+            <button class="btn btn-ghost" style="font-size:12px" onclick="exportPDF()"><i data-lucide="file-down"></i> Export PDF</button>
             <button class="btn btn-ghost" style="font-size:12px" onclick="exportCSV()">CSV</button>
           </div>
         </div>
@@ -1320,7 +1322,7 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
         </div>
         <div class="charts-grid" id="myGrid"></div>
         <div class="empty-state" id="myEmpty">
-          <div class="empty-state-icon">🎨</div>
+          <div class="empty-state-icon"><i data-lucide="chart-column"></i></div>
           <div class="empty-state-title">No custom charts yet</div>
           <div class="empty-state-text">Click the + button or use the button above to create your first custom chart!</div>
         </div>
@@ -1328,20 +1330,20 @@ input[type=color]{width:48px;height:32px;padding:2px;cursor:none!important;}
 
       <!-- ══════ ADVANCED CHARTS SECTION ══════ -->
       <div class="section" id="sec-advchart">
-        <div class="section-head"><h2>📊 Advanced Charts</h2><p>Heatmaps, Funnels, Gauges, Treemaps &amp; more</p></div>
+        <div class="section-head"><h2><i data-lucide="chart-column"></i> Advanced Charts</h2><p>Heatmaps, Funnels, Gauges, Treemaps &amp; more</p></div>
         <div id="advChartsGrid" class="charts-grid"></div>
       </div>
 
       <!-- ══════ DATA CLEANER SECTION ══════ -->
       <div class="section" id="sec-clean">
-        <div class="section-head"><h2>🧹 Data Cleaning Wizard</h2><p>Auto-detect and fix data quality issues with one click</p></div>
+        <div class="section-head"><h2><i data-lucide="wand-sparkles"></i> Data Cleaning Wizard</h2><p>Auto-detect and fix data quality issues with one click</p></div>
         <div class="clean-stats" id="cleanStats"></div>
         <div class="clean-issues" id="cleanIssues">
           <div style="text-align:center;padding:32px;color:var(--text3)">Upload data first to run analysis</div>
         </div>
         <div id="cleanActions" style="display:none;gap:10px;margin-bottom:16px;">
-          <button class="btn btn-primary" onclick="runCleanAll()">⚡ Fix All Issues</button>
-          <button class="btn btn-ghost" onclick="runCleanScan()">🔄 Re-scan</button>
+          <button class="btn btn-primary" onclick="runCleanAll()"><i data-lucide="zap"></i> Fix All Issues</button>
+          <button class="btn btn-ghost" onclick="runCleanScan()"><i data-lucide="refresh-cw"></i> Re-scan</button>
         </div>
         <div class="clean-log" id="cleanLog"></div>
       </div>
@@ -1383,18 +1385,18 @@ const KEYWORDS={
 };
 const PALETTE=['#4f8ef7','#7c5cf6','#f75f8e','#3dd68c','#f7b84f','#4fc3f7','#ff8a65','#a5d6a7','#ce93d8','#80cbc4','#ffb74d','#f48fb1','#90caf9','#c5e1a5'];
 const DEFAULT_CHARTS=[
-  {id:'gender',title:'Gender Distribution',icon:'👥',type:'pie',field:'gender'},
-  {id:'age',title:'Age Distribution',icon:'🎂',type:'bar',field:'age',numeric:true},
-  {id:'income',title:'Income Distribution',icon:'💰',type:'bar',field:'income',numeric:true},
-  {id:'marital',title:'Marital Status',icon:'💍',type:'doughnut',field:'marital'},
-  {id:'joinYear',title:'Joining Year Trend',icon:'📅',type:'bar',field:'joinYear'},
-  {id:'department',title:'Department Breakdown',icon:'🏢',type:'bar',field:'department'},
-  {id:'designation',title:'Designations',icon:'🎯',type:'bar',field:'designation'},
-  {id:'skillLevel',title:'Skill Levels',icon:'⭐',type:'radar',field:'skillLevel'},
-  {id:'experience',title:'Experience Distribution',icon:'🏆',type:'bar',field:'experience',numeric:true},
-  {id:'state',title:'Employees by State',icon:'ST',type:'bar',field:'state'},
-  {id:'birthYear',title:'Birth Year Trend',icon:'BY',type:'bar',field:'dob',dateYear:true},
-  {id:'joiningMonth',title:'Joining Month Trend',icon:'JM',type:'line',field:'doj',dateMonth:true}
+  {id:'gender',title:'Gender Distribution',icon:ico('users'),type:'pie',field:'gender'},
+  {id:'age',title:'Age Distribution',icon:ico('cake'),type:'bar',field:'age',numeric:true},
+  {id:'income',title:'Income Distribution',icon:ico('circle-dollar-sign'),type:'bar',field:'income',numeric:true},
+  {id:'marital',title:'Marital Status',icon:ico('heart'),type:'doughnut',field:'marital'},
+  {id:'joinYear',title:'Joining Year Trend',icon:ico('calendar-days'),type:'bar',field:'joinYear'},
+  {id:'department',title:'Department Breakdown',icon:ico('building-2'),type:'bar',field:'department'},
+  {id:'designation',title:'Designations',icon:ico('target'),type:'bar',field:'designation'},
+  {id:'skillLevel',title:'Skill Levels',icon:ico('sparkles'),type:'radar',field:'skillLevel'},
+  {id:'experience',title:'Experience Distribution',icon:ico('trophy'),type:'bar',field:'experience',numeric:true},
+  {id:'state',title:'Employees by State',icon:ico('map-pin'),type:'bar',field:'state'},
+  {id:'birthYear',title:'Birth Year Trend',icon:ico('calendar-clock'),type:'bar',field:'dob',dateYear:true},
+  {id:'joiningMonth',title:'Joining Month Trend',icon:ico('calendar-range'),type:'line',field:'doj',dateMonth:true}
 ];
 
 // ================================================================
@@ -1454,11 +1456,22 @@ function showSpinner(msg='Processing...'){
 }
 function hideSpinner(){document.getElementById('spinner').classList.remove('show');}
 
+function ico(name,cls='ui-icon'){
+  return '<i data-lucide="'+name+'" class="'+cls+'"></i>';
+}
+
+function refreshIcons(root){
+  if(window.lucide&&window.lucide.createIcons){
+    window.lucide.createIcons({attrs:{'stroke-width':2},root:root||document});
+  }
+}
+
 function toast(msg,type='info'){
   const c=document.getElementById('toastWrap'),t=document.createElement('div');
   t.className='toast '+type;
-  t.innerHTML=`<span>${{info:'ℹ️',success:'✅',error:'❌'}[type]||'ℹ️'}</span><span>${msg}</span>`;
+  t.innerHTML=`<span>${{info:ico('info'),success:ico('circle-check'),error:ico('circle-x')}[type]||ico('info')}</span><span>${msg}</span>`;
   c.appendChild(t);
+  refreshIcons(t);
   setTimeout(()=>{t.style.animation='tOut .3s ease forwards';setTimeout(()=>t.remove(),300);},3500);
 }
 
@@ -1572,7 +1585,7 @@ function buildPreview(){
   document.getElementById('previewTbl').innerHTML=html+'</tbody>';
   document.getElementById('rowChip').textContent=S.data.length+' rows';
   document.getElementById('metaChips').innerHTML=
-    `<span class="meta-chip">📄 ${esc(S.fileName)}</span>
+    `<span class="meta-chip">${ico('file-text')} ${esc(S.fileName)}</span>
      <span class="meta-chip">${S.fileSize}</span>
      <span class="meta-chip">${S.headers.length} cols</span>`;
 }
@@ -1992,12 +2005,12 @@ function renderMainGrid(){
   const items=Object.values(S.chartData);
   const readyItems=items.filter(function(cd){return cd.ok;});
   if(!items.length){
-    grid.innerHTML='<div class="empty-state"><div class="empty-state-icon">📉</div><div class="empty-state-title">No charts yet</div></div>';
+    grid.innerHTML='<div class="empty-state"><div class="empty-state-icon"><i data-lucide="chart-column"></i></div><div class="empty-state-title">No charts yet</div></div>';
     return;
   }
   const list=readyItems;
   if(!list.length){
-    grid.innerHTML='<div class="empty-state"><div class="empty-state-icon">📊</div><div class="empty-state-title">No available charts</div></div>';
+    grid.innerHTML='<div class="empty-state"><div class="empty-state-icon"><i data-lucide="chart-column"></i></div><div class="empty-state-title">No available charts</div></div>';
     return;
   }
   // Write HTML only — drawing happens AFTER section is made visible
@@ -2034,14 +2047,14 @@ function cardHTML(def,ok,pfx){
   const id=pfx+def.id;
   if(!ok)return`<div class="chart-card" id="card_${id}">
     <div class="card-hdr"><div><div class="card-title">${def.icon} ${def.title}</div></div></div>
-    <div class="chart-na"><div class="chart-na-icon">⚠️</div><div class="chart-na-text">This chart is not available — required data was not found.</div></div>
+    <div class="chart-na"><div class="chart-na-icon">${ico('triangle-alert')}</div><div class="chart-na-text">This chart is not available — required data was not found.</div></div>
   </div>`;
   return`<div class="chart-card" id="card_${id}">
     <div class="card-hdr">
       <div><div class="card-title" id="ctitle_${id}">${def.icon} ${def.title}</div><div class="card-sub" id="csub_${id}">Loading...</div></div>
       <div class="card-actions">
-        <div class="icon-btn" title="Customize" onclick="toggleCust('${id}')">🎨</div>
-        <div class="icon-btn" title="Download" onclick="dlPNG('${id}')">📥</div>
+        <div class="icon-btn" title="Customize" onclick="toggleCust('${id}')">${ico('palette')}</div>
+        <div class="icon-btn" title="Download" onclick="dlPNG('${id}')">${ico('download')}</div>
       </div>
     </div>
     <div class="canvas-wrap"><canvas id="cv_${id}"></canvas></div>
@@ -2356,11 +2369,11 @@ function myCardHTML(c){
   const id='my_'+c.id;
   return`<div class="chart-card" id="card_${id}">
     <div class="card-hdr">
-      <div><div class="card-title" id="ctitle_${id}">🎨 ${esc(c.title)}</div><div class="card-sub" id="csub_${id}">${esc(c.col)} · ${c.vals.length} pts</div></div>
+      <div><div class="card-title" id="ctitle_${id}">${ico('palette')} ${esc(c.title)}</div><div class="card-sub" id="csub_${id}">${esc(c.col)} · ${c.vals.length} pts</div></div>
       <div class="card-actions">
-        <div class="icon-btn" onclick="toggleCust('${id}')">🎨</div>
-        <div class="icon-btn" onclick="dlPNG('${id}')">📥</div>
-        <div class="icon-btn" style="color:var(--accent3)" onclick="removeMyChart('${c.id}')">🗑</div>
+        <div class="icon-btn" onclick="toggleCust('${id}')">${ico('palette')}</div>
+        <div class="icon-btn" onclick="dlPNG('${id}')">${ico('download')}</div>
+        <div class="icon-btn" style="color:var(--accent3)" onclick="removeMyChart('${c.id}')">${ico('trash-2')}</div>
       </div>
     </div>
     <div class="canvas-wrap"><canvas id="cv_${id}"></canvas></div>
@@ -2688,6 +2701,14 @@ function killGrid(id){
 // COMPANY SETUP
 // ============================================================
 document.addEventListener('DOMContentLoaded',function(){
+  refreshIcons();
+  if(window.MutationObserver){
+    var iconTimer=null;
+    new MutationObserver(function(){
+      clearTimeout(iconTimer);
+      iconTimer=setTimeout(function(){refreshIcons();},30);
+    }).observe(document.body,{childList:true,subtree:true});
+  }
   // Try localStorage first, then sessionStorage as fallback
   let raw=null;
   try{ raw=localStorage.getItem('dl_company'); }catch(e){}
@@ -3086,7 +3107,7 @@ function fixWhitespace(){
 // ================================================================
 function renderAdvCharts(){
   const grid=document.getElementById('advChartsGrid');
-  if(!grid||!S.data.length){if(grid)grid.innerHTML='<div class="empty-state"><div class="empty-state-icon">📊</div><div class="empty-state-title">Upload data first</div></div>';return;}
+  if(!grid||!S.data.length){if(grid)grid.innerHTML='<div class="empty-state"><div class="empty-state-icon"><i data-lucide="chart-column"></i></div><div class="empty-state-title">Upload data first</div></div>';return;}
   grid.innerHTML='';
   // Pick best columns
   const numCol=S.headers.find(h=>S.data.filter(r=>!isNaN(parseFloat(r[h]))).length/S.data.length>0.7);
